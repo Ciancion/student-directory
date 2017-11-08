@@ -1,5 +1,4 @@
-def input_students (let)
-  @let = let
+def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit retur twice"
   #create an empty array
@@ -7,7 +6,7 @@ def input_students (let)
   name = gets.chomp.downcase
   while !name.empty? do
     #add the student hash to the array
-    if name.start_with?(@let)
+    if name.length < 12
       students << {name: name, cohort: :november}
       puts "We have #{students.count} students"
 
@@ -29,10 +28,10 @@ def print(names)
 end
 
 def print_footer(names)
-  puts "Overall, we have #{names.count} students who the name begins with #{@let}"
+  puts "Overall, we have #{names.count} students whose name is shorter than 12 characters"
 end
 
-students = input_students("m")
+students = input_students
 print_header
 print(students)
 print_footer(students)
