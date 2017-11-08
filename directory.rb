@@ -22,9 +22,16 @@ def print_header
 end
 
 def print(names)
-  names.each do |student|
-  puts " #{student[:name]} (#{student[:cohort]} cohort) "
-  end
+  # names.each do |student|
+index = 0
+#l = (names.length - 1).to_int
+ while (names.length - 1) > index
+
+   puts "#{index}." + "#{names[index][:name]}" + " (#{names[index][:cohort]} cohort) "
+   index += 1
+ end
+  #end
+
 end
 
 def print_footer(names)
