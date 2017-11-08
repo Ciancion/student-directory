@@ -1,14 +1,18 @@
-def input_students
+def input_students (let)
+  @let = let
   puts "Please enter the names of the students"
   puts "To finish, just hit retur twice"
   #create an empty array
   students = []
-  name = gets.chomp
+  name = gets.chomp.downcase
   while !name.empty? do
     #add the student hash to the array
-    students << {name: name, cohort: :november}
-    puts "We have #{students.count} students"
-    name = gets.chomp
+    if name.start_with?(@let)
+      students << {name: name, cohort: :november}
+      puts "We have #{students.count} students"
+
+    end
+    name = gets.chomp.downcase
   end
   students
 end
@@ -19,16 +23,16 @@ def print_header
 end
 
 def print(names)
-  names.each_with_index do |student, index|
-    puts "#{index}. #{student[:name]} (#{student[:cohort]} cohort) "
+  names.each do |student|
+  puts " #{student[:name]} (#{student[:cohort]} cohort) "
   end
 end
 
 def print_footer(names)
-  puts "Overall, we have #{names.count} great students"
+  puts "Overall, we have #{names.count} students who the name begins with #{@let}"
 end
 
-students = input_students
+students = input_students("m")
 print_header
 print(students)
 print_footer(students)
