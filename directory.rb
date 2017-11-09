@@ -23,8 +23,13 @@ students
 end
 
 def print_header
-  puts "The students of Villains Academy"
-  puts "_________________"
+  length = 80
+  @length = length
+  header_l = "The students of Villains Academy".length
+  @header_l = header_l
+  space_l = "_________________".length
+  puts "The students of Villains Academy".center(@length)
+  puts "_________________".center(@length + ((space_l - @header_l)))
 end
 
 def print(names)
@@ -32,16 +37,18 @@ def print(names)
 index = 0
 
  while (names.length) > index
-
-   puts "#{index}." + "#{names[index][:name]}," + " (#{names[index][:cohort]} cohort), " + "#{names[index][:nationality]}, " + "#{names[index][:age]} years old"
+   names_string = "#{index}. #{names[index][:name]} (#{names[index][:cohort]} cohort) #{names[index][:nationality]} #{names[index][:age]} years old"
+   length_names = names_string.length
+   puts names_string.center(@length + (length_names - @header_l))
    index += 1
  end
-
-
 end
 
 def print_footer(names)
-  puts "Overall, we have #{names.count} students whose name is shorter than 12 characters"
+
+  footer_string = "Overall, we have #{names.count} students whose name is shorter than 12 characters"
+  lenght_footer = footer_string.length
+  puts footer_string.center(@length + (lenght_footer - @header_l))
 end
 
 students = input_students
