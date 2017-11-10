@@ -4,12 +4,12 @@ def input_students
   puts "To finish, just hit return twice"
   #create an empty array
   students = []
-  name = gets.chomp.downcase
+  name = gets.strip.downcase
 
 
   while !name.empty? do
     #add the student hash to the array
-    cohort = gets.chomp.downcase
+    cohort = gets.strip.downcase
     cohorts = ["january", "february", "march", "april", "may", "september", "october", "november", "december"]
     $cohorts = cohorts
     if cohort == ""
@@ -18,15 +18,15 @@ def input_students
     while !cohorts.include?(cohort)
       if cohort == "june" || cohort == "july" || cohort == "august"
         puts "There are no cohorts in June, July, August. Insert a valid courth"
-          cohort = gets.chomp
+          cohort = gets.strip.downcase
       else
         puts "There is a typo, please write the cohort again"
-        cohort = gets.chomp
+        cohort = get.strip.downcase
       end
     end
     puts "Please insert nationality and age"
-    nationality = gets.chomp.downcase
-    age = gets.chomp.downcase
+    nationality = gets.strip.downcase
+    age = gets.strip.downcase
     students << {name: name, cohort: cohort, nationality: nationality, age: age }
     if students.count == 1
       puts "We have #{students.count} student"
@@ -35,7 +35,7 @@ def input_students
       puts "We have #{students.count} students"
       puts "Please enter the names and cohort of the student"
     end
-    name = gets.chomp.downcase
+    name = gets.strip.downcase
   end
   students
 end
