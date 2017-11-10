@@ -1,12 +1,10 @@
+@students = []
 def input_students
   puts "Please insert student names and cohort"
   #puts "Then insert the nationality, and add age of the students"
   puts "To finish, just hit return twice"
   #create an empty array
-  students = []
   name = gets.strip.downcase
-
-
   while !name.empty? do
     #add the student hash to the array
     cohort = gets.strip.downcase
@@ -27,17 +25,17 @@ def input_students
     puts "Please insert nationality and age"
     nationality = gets.strip.downcase
     age = gets.strip.downcase
-    students << {name: name, cohort: cohort, nationality: nationality, age: age }
-    if students.count == 1
-      puts "We have #{students.count} student"
+    @students << {name: name, cohort: cohort, nationality: nationality, age: age }
+    if @students.count == 1
+      puts "We have #{@students.count} student"
       puts "Please enter the names and cohort of the student"
     else
-      puts "We have #{students.count} students"
+      puts "We have #{@students.count} students"
       puts "Please enter the names and cohort of the student"
     end
     name = gets.strip.downcase
   end
-  students
+  # students
 end
 
 def print_header
@@ -50,15 +48,15 @@ def print_header
   puts "_________________".center(@length + ((space_l - @header_l)))
 end
 
-def print(names)
+def print_student_list
 
- cohort_groups = names.group_by { |x| "cohort_#{x[:cohort]}".to_sym}
- cohort_groups.each do |cohort, students|
+ cohort_groups = @students.group_by { |x| "cohort_#{x[:cohort]}".to_sym}
+ cohort_groups.each do |cohort, people|
    cohort_string = "#{cohort}:"
    puts cohort_string.center(@length + ((cohort_string.length) - @header_l))
  #students.each { |student| puts student.values.join(' ') }
 
- students.each do |student|
+   people.each do |student|
    print_string = "name student: #{student[:name]}  cohort: #{student[:cohort]}  nationality: #{student[:nationality]}  age: #{student[:age]}"
    puts print_string.center(@length + ((print_string.length) - @header_l))
  end
@@ -67,48 +65,53 @@ def print(names)
  end
 end
 
+def print_footer
 
-
-
-def print_footer(names)
-
-  if names.count == 1
-    footer_string = "Overall, we have #{names.count} great student "
+  if @students.count == 1
+    footer_string = "Overall, we have #{@students.count} great student "
   else
-    footer_string = "Overall, we have #{names.count} great students "
+    footer_string = "Overall, we have #{@students.count} great students "
   end
   lenght_footer = footer_string.length
   puts footer_string.center(@length + (lenght_footer - @header_l))
 end
 
-def interactive_menu
-  students = []
-  loop do
-    #1. print the menu and ask the user what to do
-    puts "1. Input the students"
-    puts "2. Show the students"
-    puts "9. Exit" # 9 because we'll be adding more items
-    #2. read the input and save it into a variable
-    selection = gets.chomp
-    #3. do what the user has asked
-    case selection
+def show_student
+  if @students.count != 0
+    print_header
+    print_student_list
+    print_footer
+  else
+  puts "The list of students is empty!"
+  end
+end
+
+def print_menu
+  puts "1. Input the students"
+  puts "2. Show the students"
+  puts "9. Exit" # 9 because we'll be adding more items
+end
+
+def process(selection)
+  case selection
     when "1"
       #input student
-      students = input_students
+      input_students
     when "2"
       #show the students
-      if students.count != 0
-        print_header
-        print(students)
-        print_footer(students)
-      else
-        puts "The list of students is empty!"
-      end
+      show_student
+
     when "9"
       exit #this will terminate the program
     else
       puts "I don\'t lnow what you ment, try again"
     end
+  end
+
+def interactive_menu
+  loop do
+    print_menu
+    process(gets.chomp)
   end
 end
 
