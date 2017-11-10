@@ -1,7 +1,7 @@
 def input_students
   puts "Please insert student names and cohort"
   #puts "Then insert the nationality, and add age of the students"
-  puts "To finish, just hit retur twice"
+  puts "To finish, just hit return twice"
   #create an empty array
   students = []
   name = gets.chomp.downcase
@@ -11,6 +11,7 @@ def input_students
     #add the student hash to the array
     cohort = gets.chomp.downcase
     cohorts = ["january", "february", "march", "april", "may", "september", "october", "november", "december"]
+    $cohorts = cohorts
     if cohort == ""
       cohort = "november"
     end
@@ -21,7 +22,7 @@ def input_students
       else
         puts "There is a typo, please write the cohort again"
         cohort = gets.chomp
-      end 
+      end
     end
     puts "Please insert nationality and age"
     nationality = gets.chomp.downcase
@@ -46,15 +47,23 @@ end
 
 def print(names)
 
-index = 0
+ cohort_groups = names.group_by { |x| "cohort_#{x[:cohort]}".to_sym}
+ cohort_groups.each do |cohort, students|
+   cohort_string = "#{cohort}:"
+   puts cohort_string.center(@length + ((cohort_string.length) - @header_l))
+ #students.each { |student| puts student.values.join(' ') }
 
- while (names.length) > index
-   names_string = "#{index}. #{names[index][:name]} (#{names[index][:cohort]} cohort) #{names[index][:nationality]} #{names[index][:age]} years old"
-   length_names = names_string.length
-   puts names_string.center(@length + (length_names - @header_l))
-   index += 1
+ students.each do |student|
+   print_string = "name student: #{student[:name]}  cohort: #{student[:cohort]}  nationality: #{student[:nationality]}  age: #{student[:age]}"
+   puts print_string.center(@length + ((print_string.length) - @header_l))
+ end
+
+ puts "\n"
  end
 end
+
+
+
 
 def print_footer(names)
 
