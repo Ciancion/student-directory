@@ -28,8 +28,13 @@ def input_students
     nationality = gets.chomp.downcase
     age = gets.chomp.downcase
     students << {name: name, cohort: cohort, nationality: nationality, age: age }
-    puts "We have #{students.count} students"
-    puts "Please enter the names and cohort of the students"
+    if students.count == 1
+      puts "We have #{students.count} student"
+      puts "Please enter the names and cohort of the student"
+    else
+      puts "We have #{students.count} students"
+      puts "Please enter the names and cohort of the student"
+    end
     name = gets.chomp.downcase
   end
   students
@@ -67,7 +72,11 @@ end
 
 def print_footer(names)
 
-  footer_string = "Overall, we have #{names.count} great students "
+  if names.count == 1
+    footer_string = "Overall, we have #{names.count} great student "
+  else
+    footer_string = "Overall, we have #{names.count} great students "
+  end
   lenght_footer = footer_string.length
   puts footer_string.center(@length + (lenght_footer - @header_l))
 end
