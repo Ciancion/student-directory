@@ -1,4 +1,14 @@
 @students = []
+def students_details(name,cohort, nationality,age)
+  @students << {name: name,
+    cohort: cohort,
+    nationality: nationality,
+    age: age }
+
+  end
+
+
+
 def input_students
   puts "Please insert student names and cohort"
   #puts "Then insert the nationality, and add age of the students"
@@ -23,9 +33,10 @@ def input_students
       end
     end
     puts "Please insert nationality and age"
-    nationality = STDIR.gets.chomp.downcase
-    age = STDIR.gets.chomp.downcase
-    @students << {name: name, cohort: cohort, nationality: nationality, age: age }
+    nationality = STDIN.gets.chomp.downcase
+    age = STDIN.gets.chomp.downcase
+    # @students << {name: name, cohort: cohort, nationality: nationality, age: age }
+    students_details(name, cohort, nationality, age)
     if @students.count == 1
       puts "We have #{@students.count} student"
       puts "Please enter the names and cohort of the student"
@@ -33,7 +44,7 @@ def input_students
       puts "We have #{@students.count} students"
       puts "Please enter the names and cohort of the student"
     end
-    name = STDIR.gets.chomp.downcase
+    name = STDIN.gets.chomp.downcase
   end
   # students
 end
@@ -125,7 +136,7 @@ def save_students
   file = File.open("students.csv", "w")
   #iterate over the array of students
   @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
+    student_data = [student[:name], student[:cohort], student[:nationality], student[:age]]
     csv_line = student_data.join(",")
     file.puts csv_line
   end
@@ -135,8 +146,9 @@ end
 def load_students(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
-    name, cohort = line.chomp.split(',')
-    @students << {name: name, cohort: cohort.to_sym}
+    name, cohort, nationality, age = line.chomp.split(',')
+    # @students << {name: name, cohort: cohort.to_sym}
+    students_details(name, cohort, nationality, age)
   end
   file.close
 end
