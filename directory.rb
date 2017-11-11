@@ -134,27 +134,28 @@ end
 
 def save_students(filename = "students.csv" )
   #open the file for writing
-  file = File.open(filename, "w")
-  @students.each do |student|
-    student_data = [student[:name], student[:cohort], student[:nationality], student[:age]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
+  File.open(filename, "w") do |file|
+    @students.each do |student|
+      student_data = [student[:name], student[:cohort], student[:nationality], student[:age]]
+      csv_line = student_data.join(",")
+      file.write(csv_line)
+    end
   end
-  file.close
-  end
+end
+
 def file_name
   puts "Insert a file"
   @filename = STDIN.gets.chomp
 end
 
 def load_students(filename = "students.csv")
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
-    name, cohort, nationality, age = line.chomp.split(',')
-    students_details(name, cohort, nationality, age)
+  File.open(filename, "r") do |file|
+    file.readlines.each do |line|
+      name, cohort, nationality, age = line.chomp.split(',')
+      students_details(name, cohort, nationality, age)
+    end
+    puts "#{@students.count} students have been loaded in total"
   end
-  puts "#{@students.count} students have been loaded in total "
-  file.close
 end
 
 def try_load_students
