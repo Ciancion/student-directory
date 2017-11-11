@@ -1,3 +1,5 @@
+require "csv"
+
 @students = []
 def students_details(name, cohort, nationality, age)
   @students << {name: name,
@@ -132,13 +134,22 @@ def interactive_menu
   end
 end
 
+# def save_students(filename = "students.csv" )
+#   #open the file for writing
+#   File.open(filename, "w") do |file|
+#     @students.each do |student|
+#       student_data = [student[:name], student[:cohort], student[:nationality], student[:age]]
+#       csv_line = student_data.join(",")
+#       file.write(csv_line)
+#     end
+#   end
+# end
+
 def save_students(filename = "students.csv" )
   #open the file for writing
-  File.open(filename, "w") do |file|
+  CSV.open(filename, "wb") do |csv|
     @students.each do |student|
-      student_data = [student[:name], student[:cohort], student[:nationality], student[:age]]
-      csv_line = student_data.join(",")
-      file.write(csv_line)
+      csv << [student[:name], student[:cohort], student[:nationality], student[:age]]
     end
   end
 end
@@ -148,14 +159,22 @@ def file_name
   @filename = STDIN.gets.chomp
 end
 
+# def load_students(filename = "students.csv")
+#   File.open(filename, "r") do |file|
+#     file.readlines.each do |line|
+#       name, cohort, nationality, age = line.chomp.split(',')
+#       students_details(name, cohort, nationality, age)
+#     end
+#     puts "#{@students.count} students have been loaded in total"
+#   end
+# end
+
 def load_students(filename = "students.csv")
-  File.open(filename, "r") do |file|
-    file.readlines.each do |line|
-      name, cohort, nationality, age = line.chomp.split(',')
-      students_details(name, cohort, nationality, age)
+  CSV.foreach(filename) do |line|
+    name, cohort, nationality, age = line
+    students_details(name, cohort, nationality, age)
     end
     puts "#{@students.count} students have been loaded in total"
-  end
 end
 
 def try_load_students
