@@ -1,5 +1,5 @@
 @students = []
-def students_details(name,cohort, nationality,age)
+def students_details(name, cohort, nationality, age)
   @students << {name: name,
     cohort: cohort,
     nationality: nationality,
@@ -101,16 +101,25 @@ def process(selection)
   case selection
     when "1"
       #input student
+      puts "You have chosen to input the student details"
       input_students
+
     when "2"
       #show the students
+      puts "You have chosen to show the students details"
       show_student
+
     when "3"
+      puts "#{@students.count} students have been saved in the file students.csv"
       save_students
+
     when "4"
+      puts "Loaded #{@students.count} students"
       load_students
+
     when "9"
       exit #this will terminate the program
+
     else
       puts "I don\'t lnow what you ment, try again"
     end
@@ -133,7 +142,7 @@ def save_students
     file.puts csv_line
   end
   file.close
-end
+  end
 
 def load_students(filename = "students.csv")
   file = File.open(filename, "r")
@@ -143,11 +152,12 @@ def load_students(filename = "students.csv")
   end
   file.close
 end
+
 def try_load_students
   filename = ARGV.first #first argument from the command line
   if filename.nil?
     load_students
-    puts "Loaded #{@students.count} from #{filename}"
+    puts "Loaded #{@students.count} from default file"
   elsif File.exist?(filename)
     load_students(filename)
     puts "Loaded #{@students.count} from #{filename}"
