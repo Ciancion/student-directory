@@ -7,8 +7,6 @@ def students_details(name,cohort, nationality,age)
 
   end
 
-
-
 def input_students
   puts "Please insert student names and cohort"
   #puts "Then insert the nationality, and add age of the students"
@@ -19,13 +17,12 @@ def input_students
     #add the student hash to the array
     cohort = STDIN.gets.chomp.downcase
     cohorts = ["january", "february", "march", "april", "may", "september", "october", "november", "december"]
-    $cohorts = cohorts
     if cohort == ""
       cohort = "november"
     end
     while !cohorts.include?(cohort)
       if cohort == "june" || cohort == "july" || cohort == "august"
-        puts "There are no cohorts in June, July, August. Insert a valid courth"
+        puts "There are no cohorts in June, July, August. Insert a valid cohort"
           cohort = STDIN.gets.chomp.downcase
       else
         puts "There is a typo, please write the cohort again"
@@ -35,7 +32,6 @@ def input_students
     puts "Please insert nationality and age"
     nationality = STDIN.gets.chomp.downcase
     age = STDIN.gets.chomp.downcase
-    # @students << {name: name, cohort: cohort, nationality: nationality, age: age }
     students_details(name, cohort, nationality, age)
     if @students.count == 1
       puts "We have #{@students.count} student"
@@ -60,18 +56,14 @@ def print_header
 end
 
 def print_student_list
-
- cohort_groups = @students.group_by { |x| "cohort_#{x[:cohort]}".to_sym}
- cohort_groups.each do |cohort, people|
+cohort_groups = @students.group_by { |x| "cohort_#{x[:cohort]}".to_sym}
+cohort_groups.each do |cohort, people|
    cohort_string = "#{cohort}:"
    puts cohort_string.center(@length + ((cohort_string.length) - @header_l))
- #students.each { |student| puts student.values.join(' ') }
-
    people.each do |student|
    print_string = "name student: #{student[:name]}  cohort: #{student[:cohort]}  nationality: #{student[:nationality]}  age: #{student[:age]}"
    puts print_string.center(@length + ((print_string.length) - @header_l))
  end
-
  puts "\n"
  end
 end
@@ -147,7 +139,6 @@ def load_students(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort, nationality, age = line.chomp.split(',')
-    # @students << {name: name, cohort: cohort.to_sym}
     students_details(name, cohort, nationality, age)
   end
   file.close
