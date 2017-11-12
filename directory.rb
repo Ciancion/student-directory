@@ -134,17 +134,6 @@ def interactive_menu
   end
 end
 
-# def save_students(filename = "students.csv" )
-#   #open the file for writing
-#   File.open(filename, "w") do |file|
-#     @students.each do |student|
-#       student_data = [student[:name], student[:cohort], student[:nationality], student[:age]]
-#       csv_line = student_data.join(",")
-#       file.write(csv_line)
-#     end
-#   end
-# end
-
 def save_students(filename = "students.csv" )
   #open the file for writing
   CSV.open(filename, "wb") do |csv|
@@ -158,16 +147,6 @@ def file_name
   puts "Insert a file"
   @filename = STDIN.gets.chomp
 end
-
-# def load_students(filename = "students.csv")
-#   File.open(filename, "r") do |file|
-#     file.readlines.each do |line|
-#       name, cohort, nationality, age = line.chomp.split(',')
-#       students_details(name, cohort, nationality, age)
-#     end
-#     puts "#{@students.count} students have been loaded in total"
-#   end
-# end
 
 def load_students(filename = "students.csv")
   CSV.foreach(filename) do |line|
